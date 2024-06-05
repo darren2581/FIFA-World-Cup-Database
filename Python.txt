@@ -1,0 +1,60 @@
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '456789';
+
+
+//Select from location
+import mysql.connector
+DB = {
+    "host": "localhost",
+    "user": "root",
+    "password": "456789",
+    "database": "Assessment_21690848"
+}
+conn = mysql.connector.connect(**DB)
+cur = conn.cursor()
+cur.execute("SELECT * FROM Location")
+for row in cur.fetchall():
+    row_data = ', '.join(map(str, row))  # Concatenate values with a comma and space
+    print(row_data)
+
+cur.close()
+conn.close()
+
+
+//Insert new Records
+import mysql.connector
+DB = {
+    "host": "localhost",
+    "user": "root",
+    "password": "456789",
+    "database": "Assessment_21690848"
+}
+conn = mysql.connector.connect(**DB)
+cur = conn.cursor()
+# Call the stored procedure
+cur.callproc("InsNewRecord", ('Michelle Lau', 15, 2035, 'Vietnam'))
+# Commit the changes
+conn.commit()
+
+cur.close()
+conn.close()
+
+
+//Delete player
+import mysql.connector
+
+DB = {
+    "host": "localhost",
+    "user": "root",
+    "password": "456789",
+    "database": "Assessment_21690848"
+}
+conn = mysql.connector.connect(**DB)
+cur = conn.cursor()
+# Call the stored procedure with an argument as a tuple
+cur.callproc("DeletePlayer", ('Sam Kerr',))
+# Commit the changes
+conn.commit()
+
+cur.close()
+conn.close()
+
